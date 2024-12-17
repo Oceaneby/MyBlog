@@ -24,9 +24,9 @@ $articles = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <ul>
     <?php foreach ($articles as $article): ?>
         <li>
-            <h2> <?= htmlspecialchars($article['title']) ?></h2>
-            <p><?= htmlspecialchars($article['created_at']) ?></p>
-            <p><?= htmlspecialchars($article['preview']) ?></p>
+            <h2> <?php echo htmlspecialchars($article['title']) ?></h2>
+            <p><?php echo htmlspecialchars($article['created_at']) ?></p>
+            <p><?php echo htmlspecialchars($article['preview']) ?></p>
 
             <!-- ce lien contient l'id de mon article dans l'URL  -->
             <a href="article.php?id=<?= $article['id'] ?>">Lire la suite </a>

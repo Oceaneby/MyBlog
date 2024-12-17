@@ -128,7 +128,7 @@ $articles = $recup->fetchAll(PDO::FETCH_ASSOC);
     <?php foreach ($articles as $article): ?>
     
             <li>
-                <?= htmlspecialchars($article['title']) ?>
+                <?php echo htmlspecialchars($article['title']) ?>
                 <form method="POST">
                     <input type="hidden" name="delete_action" value="delete_article">
                     <input type="hidden" name="delete_id" value="<?= $article['id'] ?>">
