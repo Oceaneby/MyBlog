@@ -11,7 +11,7 @@ try {
     // Configuration pour lever des exceptions en cas d'erreur
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    echo "Connexion réussie !";
+    // echo "Connexion réussie !";
 } catch (PDOException $e) {
     // Gestion des erreurs de connexion
     echo "Erreur de connexion : " . $e->getMessage();

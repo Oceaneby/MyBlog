@@ -63,14 +63,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <title>Inscription Blog</title>
     <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+<header>
+        <nav>
+            <ul>
+                <li><a href="accueil.php">Accueil</a></li>
+                <li><a href="login.php">login</a></li>
+            </ul>
+        </nav>
+    </header>
+<body class="container">
     <h1>Rejoignez-nous dès aujourd'hui !</h1>
-<form method="POST">
+    <form class="signup__form" method="POST">
     
     <input type="text" name="username" placeholder="Nom d'utilisateur" required><br>
     <input type="password" name="password" placeholder="Mot de passe" required><br>
     <input class="btn"  type="submit" value="S'inscrire">
+
+    <p class="separator__text">Ou</p>
+    <p>Se connecter <a href="login.php">Ici !</a></p>
 </form>
+<footer>
+        <p>&copy; Papillon Digital. Tous droits réservés.</p>
+    </footer>
 </body>
 </html>
 

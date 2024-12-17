@@ -6,10 +6,10 @@ ini_set('display_error', 1);
 error_reporting(E_ALL);
 
 
-// if(!isset($_SESSION['username'])){
-//     header('Location:inscription.php');
-//     exit();
-// }
+if(!isset($_SESSION['username'])){
+    header('Location:inscription.php');
+    exit();
+}
 
 
 $title = '';
@@ -36,7 +36,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['a
     exit();
    
 };
-echo "L'ajout fonctionne !";
+// echo "L'ajout fonctionne !";
 
 
 
@@ -50,6 +50,10 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_action']) && $_
         $delete_id = $_POST['delete_id'];
         // Je récupère l'id de mon article a supprimer 
         var_dump($delete_id);
+        // Ici j'execute la requête pour supprimer d'abord le commentaires pour pouvoir supprimer l'article dans la prochaine requête 
+        $stmt = $pdo->prepare('DELETE FROM comments WHERE article_id = :id');
+        $stmt->execute(['id' => $delete_id]);
+
           // On execute la requête pour supprimer mon article avec son ID 
         $stmt = $pdo->prepare('DELETE FROM articles WHERE id = :id');
         $stmt->execute(['id' => $delete_id]);
@@ -72,8 +76,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_action']) && $_
         $article_id = $_POST['article_id'];
 
         // On sécurise le titre en échappent les caractètres spéciaux
-        $title = htmlspecialchars($_POST['title']);
-        $content = htmlspecialchars($_POST['content']);
+     
     }
 
     // On prépare la requête SQL pour modifié un article 
@@ -109,7 +112,17 @@ $articles = $recup->fetchAll(PDO::FETCH_ASSOC);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>administration</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
+<header>
+        <nav>
+            <ul>
+                <li><a href="accueil.php">Accueil</a></li>
+                <li><a href="inscription.php"> Inscription</a></li>
+                <li><a href="login.php">login</a></li>
+            </ul>
+        </nav>
+    </header>
 <body>
     <h1>administration</h1>
     <h2>Ajout d'un nouvel article</h2>
@@ -128,7 +141,7 @@ $articles = $recup->fetchAll(PDO::FETCH_ASSOC);
     <?php foreach ($articles as $article): ?>
     
             <li>
-                <?php echo htmlspecialchars($article['title']) ?>
+                <?= htmlspecialchars($article['title']) ?>
                 <form method="POST">
                     <input type="hidden" name="delete_action" value="delete_article">
                     <input type="hidden" name="delete_id" value="<?= $article['id'] ?>">
@@ -146,5 +159,6 @@ $articles = $recup->fetchAll(PDO::FETCH_ASSOC);
         
         <?php endforeach; ?>
         </ul>
+        <h3>Pensez a vous déconnecter <a href="logout.php">Déconnexion</a></h3>
 </body>
 </html>

@@ -44,7 +44,17 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Connexion</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
+<header>
+        <nav>
+            <ul>
+                <li><a href="accueil.php">Accueil</a></li>
+                <li><a href="inscription.php"> Inscription</a></li>
+                <li><a href="article.php">login</a></li>
+            </ul>
+        </nav>
+    </header>
 <body>
     <h1>Connexion à l'administration</h1>
     <form method="POST">

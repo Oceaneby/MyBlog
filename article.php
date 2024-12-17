@@ -47,14 +47,23 @@ $commentaires = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Les Articles</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
-
+    <header>
+        <nav>
+            <ul>
+                <li><a href="accueil.php">Accueil</a></li>
+                <li><a href="inscription.php"> Inscription</a></li>
+                <li><a href="login.php">login</a></li>
+            </ul>
+        </nav>
+    </header>
 <body>
     <!-- J'affiche le titre de l'article après l'avoir sécurisé des caractères spéciaux  -->
-    <h1><?php echo htmlspecialchars($article['title']) ?></h1>
+    <h1><?= htmlspecialchars($article['title']) ?></h1>
     <!-- J'affiche la date de publication de l'article (quelque doute que se soit la bonne méthode ?)  -->
-    <p>Publié le <?= date('d/m/Y', strtotime($article['created_at'])) ?></p>
-    <p><?php echo htmlspecialchars($article['content']) ?></p>
+    <p>Publié le <?= date('d/m/Y H:i', strtotime($article['created_at'])) ?></p>
+    <p><?= ($article['content']) ?></p>
 
     <h2>Ajouter un commentaire</h2>
     <form method="POST">
@@ -66,7 +75,7 @@ $commentaires = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <!-- Je boucle sur les commentaires  -->
     <?php foreach ($commentaires as $commentaire): ?>
         <p>Le <?= date('d/m/Y H:i', strtotime($commentaire['created_at'])) ?> :</p>
-        <p><?php echo htmlspecialchars($commentaire['content']) ?></p>
+        <p><?=($commentaire['content']) ?></p>
         <!-- (Voir htmlspecialchars_decode ?)  -->
     <?php endforeach; ?>
 
