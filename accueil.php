@@ -1,13 +1,9 @@
 <?php
 
 require_once('config.php');
+require_once('fonction.php');
 
-$accueil =  'SELECT *, SUBSTRING(content, 1, 20) AS preview FROM articles';
-
-$stmt = $pdo->query($accueil);
-
-$articles = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
+$articles = getArticles($pdo);
 
 ?>
 

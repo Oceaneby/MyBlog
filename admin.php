@@ -2,6 +2,7 @@
 
 session_start();
 require_once('config.php');
+require_once('fonction.php');
 ini_set('display_error', 1);
 error_reporting(E_ALL);
 
@@ -12,31 +13,35 @@ if(!isset($_SESSION['username'])){
 }
 
 
-$title = '';
-$content = '';
+
 
 // AJOUT D'UN ARTICLE 
 // Je vérifie que l'action envoyer par le formulaire est bien add_article pour l'ajout d'un nouvel article 
 if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] == 'add_article'){
     // On ajoute un nouvel article 
+       
     if(isset($_POST['title'], $_POST['content'])){
         // On sécurise le titre en échappent les caractètres spéciaux (sécurité)
-        $title = htmlspecialchars($_POST['title']);
-        $content = htmlspecialchars($_POST['content']);
+        $title = $_POST['title'];
+        $content = $_POST['content'];
+        // $title = htmlspecialchars($_POST['title']);
+        // $content = htmlspecialchars($_POST['content']);
+    
     }
-
+    addArticle($pdo, $title, $content);
     // On prépare la requête SQL pour insérer un nouvel article dans la base de données
-    $stmt = $pdo->prepare('INSERT INTO articles(title, content) VALUES (:title, :content)');
-    // On execute la requête en donnant les valeurs du titre et du contenu 
-    $stmt->execute([
-        'title' => $title,
-        'content' => $content,
-    ]);
+    // $stmt = $pdo->prepare('INSERT INTO articles(title, content) VALUES (:title, :content)');
+    // // On execute la requête en donnant les valeurs du titre et du contenu 
+    // $stmt->execute([
+    //     'title' => $title,
+    //     'content' => $content,
+    // ]);
+    
     header('Location: admin.php');
     exit();
-   
 };
 // echo "L'ajout fonctionne !";
+
 
 
 
@@ -51,12 +56,13 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_action']) && $_
         // Je récupère l'id de mon article a supprimer 
         var_dump($delete_id);
         // Ici j'execute la requête pour supprimer d'abord le commentaires pour pouvoir supprimer l'article dans la prochaine requête 
-        $stmt = $pdo->prepare('DELETE FROM comments WHERE article_id = :id');
-        $stmt->execute(['id' => $delete_id]);
-
+        // $stmt = $pdo->prepare('DELETE FROM comments WHERE article_id = :id');
+        // $stmt->execute(['id' => $delete_id]);
+        deleteComment($pdo, $delete_id);
+        deleteArticle($pdo, $delete_id);
           // On execute la requête pour supprimer mon article avec son ID 
-        $stmt = $pdo->prepare('DELETE FROM articles WHERE id = :id');
-        $stmt->execute(['id' => $delete_id]);
+        //   $stmt = $pdo->prepare('DELETE FROM articles WHERE id = :id');
+        //   $stmt->execute(['id' => $delete_id]);
         header('Location: admin.php');
         exit();
     } else {
