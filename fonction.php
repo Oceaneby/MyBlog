@@ -9,12 +9,10 @@ function getArticles($connexion){
 function getArticle($connexion, $idArticle){
     $stmt = $connexion->prepare('SELECT * FROM articles WHERE id = :id'); 
     $stmt->execute(['id' => $idArticle]);
-// Je récupère l'article en tableau associatif
     return $stmt->fetch();
 }
 
 function addComment($connexion, $idArticle, $author, $commentaire ){
-     //"now()" permet d'insérer la date et heure actuelle a created_at
     $stmt = $connexion->prepare('INSERT INTO comments (article_id, author, content, created_at) VALUES
     (:article_id,:author, :content, NOW())');
        
@@ -34,7 +32,6 @@ function getComments($connexion, $idArticle){
 
 function addArticle($connexion, $title, $content){
     $stmt = $connexion->prepare('INSERT INTO articles(title, content) VALUES (:title, :content)');
-    // On execute la requête en donnant les valeurs du titre et du contenu 
     $stmt->execute([
         'title' => $title,
         'content' => $content,
@@ -43,7 +40,6 @@ function addArticle($connexion, $title, $content){
 }
 
 function deleteComment($connexion, $delete_id){
-   // Ici j'execute la requête pour supprimer d'abord le commentaires pour pouvoir supprimer l'article dans la prochaine requête 
    $stmt = $connexion->prepare('DELETE FROM comments WHERE article_id = :id');
    $stmt->execute(['id' => $delete_id]);
 }
@@ -51,5 +47,17 @@ function deleteArticle($connexion, $delete_id){
     $stmt = $connexion->prepare('DELETE FROM articles WHERE id = :id');
     $stmt->execute(['id' => $delete_id]);
 }
+function updateArticle($connexion, $title, $content, $article_id){ 
+        $stmt = $connexion->prepare('UPDATE articles SET title = :title, content = :content WHERE id = :id');
+        $stmt->execute([
+            'title' => $title,
+            'content' => $content,
+            'id' => $article_id,
+        ]);
+}
 
-function
+function getAllArticles($connexion){
+    $stmt = $connexion->prepare('SELECT * FROM articles');
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}

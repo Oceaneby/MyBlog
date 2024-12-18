@@ -1,5 +1,4 @@
 <?php
-// Démarre la session pour pouvoir stocker les infos
 session_start();
 
 
@@ -7,25 +6,18 @@ session_start();
 //     header('Location:inscription.php');
 //     exit();
 // }
-// On vérifie si le formulaire a été envoyer
+
 if($_SERVER['REQUEST_METHOD'] === 'POST'){
     
     require_once('config.php');
 
-    // On récupère les valeurs du formulaire via la méthode POST 
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    // On hache le mot de passe pour garantir la sécurité
+   
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-
-// On prépare la requête SQL pour séléctionner un utilisateur avec le nom d'utilisateur fourni
     $stmt = $pdo ->prepare('SELECT * FROM users WHERE username = :username');
-
-    // On exucte la requête en remplaçant username par la valeur du nom d'utilisateur
     $stmt->execute(['username' => $username]);
-
-    // On récupèren l'utilisateur correspondant a ce nom d'utilisateur dans la base de données
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if($user && password_verify($password, $user['password'])){

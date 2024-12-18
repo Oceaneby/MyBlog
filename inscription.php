@@ -1,32 +1,12 @@
 <?php
 
-session_start(); // Obligatoire pour accéder aux données de session
+session_start(); 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Étape 1 : Récupération de la donnée utilisateur
     require_once 'config.php';
-   
-    // $username = $_POST['username'];
     $password = $_POST['password'];
 
-   
 
-    // Étape 2 : Préparation de la requête
-    // ICI on vérifie si le nom d'utilisateur soit unique dans la base de données
-    // $sql = "SELECT * FROM users WHERE username = :username";
-    // $stmt = $pdo->prepare($sql);
-
-    // // Étape 3 : Exécution avec liaison
-    // $stmt->execute([':username' => $username]);
-
-    // // Étape 4 : Traitement du résultat
-    // // On récupère l'utilisateur si trouver
-    // $user = $stmt->fetch(PDO::FETCH_ASSOC);
-
-
-
-
-    // Si utilisateur existe déjà, afficher un message d'erreur
     if ($user) {
      echo "L'utilisateur existe déjà. Veuillez choisir un autre nom d'utilisateur";
     } else {

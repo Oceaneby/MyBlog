@@ -3,8 +3,7 @@ session_start();
 require_once('config.php');
 require_once('fonction.php');
 
-// Je récupère l'id de l'article qui se trouve dans l'URL, si il n'est pas trouver '??' donne la valeur de 0 à id_article(l'id de url devient 0 qui n'est pas dans la base de donner)
-// $id_article = $_GET['id'] ?? 0;
+
 $errorMessage = "";
 
 if (!isset($_GET["id"])) {
