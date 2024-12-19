@@ -8,7 +8,7 @@ error_reporting(E_ALL);
 
 
 if(!isset($_SESSION['username'])){
-    header('Location:inscription.php');
+    header('Location:login.php');
     exit();
 }
 
@@ -71,42 +71,41 @@ $articles = getAllArticles($pdo);
         <nav>
             <ul>
                 <li><a href="accueil.php">Accueil</a></li>
-                <li><a href="inscription.php"> Inscription</a></li>
                 <li><a href="login.php">login</a></li>
             </ul>
         </nav>
     </header>
 <body>
-    <h1>administration</h1>
-    <h2>Ajout d'un nouvel article</h2>
-    <form method="POST">
+    <h1 class="main__title">administration</h1>
+    <h2 class="sub__title">Ajout d'un nouvel article</h2>
+    <form class="form__article" method="POST">
         <input type="hidden" name="action" value="add_article">
-        <label for="title">Titre :</label>
-        <input type="text" id="title" name="title" required><br>
+        <label for="title" class="form__label">Titre :</label>
+        <input type="text" id="title" name="title" class="form__input" required><br>
 
-        <label for="content">Le contenue :</label>
-        <textarea name="content" id="content" required></textarea>
-        <button type="submit">Ajouter l'article</button>
+        <label for="content" class="form__label">Le contenue :</label>
+        <textarea name="content" id="content" class="form__textarea" required></textarea>
+        <button type="submit" class="submit__btn">Ajouter l'article</button>
     </form>
 
-    <h2>Affichage de la liste de mes articles</h2>
-    <ul>
+    <h2 class="sub__title">Affichage de la liste de mes articles</h2>
+    <ul class="article__list">
     <?php foreach ($articles as $article): ?>
     
-            <li>
-                <?= htmlspecialchars($article['title']) ?>
+            <li class="article__item">
+                <h3 class="article__title"><?= htmlspecialchars($article['title']) ?></h3>
                 <form method="POST">
                     <input type="hidden" name="delete_action" value="delete_article">
-                    <input type="hidden" name="delete_id" value="<?= $article['id'] ?>">
-                    <button type="submit">Supprimer l'article</button>
+                    <input type="hidden" name="delete_id" value="<?=htmlspecialchars($article['id']) ?>">
+                    <button type="submit" class="submit__delete">Supprimer l'article</button>
                 </form>
 
                 <form method="POST">
                     <input type="hidden" name="update_action" value="update_article">
-                    <input type="hidden" name="article_id" value="<?= $article['id'] ?>">
-                    <input type="text" name="title" value="<?= $article['title'] ?>">
-                    <textarea name="content" value="<?=$article['content'] ?>"></textarea>
-                    <button type="submit">Modifier l'article </button>
+                    <input type="hidden" name="article_id" value="<?=htmlspecialchars($article['id']) ?>">
+                    <input type="text" name="title" value="<?=htmlspecialchars($article['title']) ?>">
+                    <textarea name="content" class="form__textarea" value="<?=htmlspecialchars($article['content']) ?>"></textarea>
+                    <button type="submit" class="submit__upload">Modifier l'article </button>
                 </form>
             </li>
         

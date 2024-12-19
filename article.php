@@ -43,7 +43,6 @@ $commentaires = getComments($pdo, $id_article);
     <nav>
         <ul>
             <li><a href="accueil.php">Accueil</a></li>
-            <li><a href="inscription.php"> Inscription</a></li>
             <li><a href="login.php">login</a></li>
         </ul>
     </nav>

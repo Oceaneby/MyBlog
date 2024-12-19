@@ -1,5 +1,6 @@
 <?php
 session_start();
+require_once('fonction.php');
 
 
 // if(!isset($_SESSION['username'])){
@@ -16,9 +17,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
    
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-    $stmt = $pdo ->prepare('SELECT * FROM users WHERE username = :username');
-    $stmt->execute(['username' => $username]);
-    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+    $user = loginUser($pdo, $username);
 
     if($user && password_verify($password, $user['password'])){
         $_SESSION['username'] = $username;
@@ -42,17 +41,19 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
         <nav>
             <ul>
                 <li><a href="accueil.php">Accueil</a></li>
-                <li><a href="inscription.php"> Inscription</a></li>
                 <li><a href="article.php">login</a></li>
             </ul>
         </nav>
     </header>
 <body>
-    <h1>Connexion à l'administration</h1>
-    <form method="POST">
+    <h1 class="container">Connexion à l'administration</h1>
+    <form class="signup__form" method="POST">
         <input type="text" name="username" placeholder="Nom d'utilisateur" required><br>
         <input type="password" name="password" placeholder="Mot de passe" required><br>
         <input class="btn" type="submit" value="Connexion">
     </form>
+    <footer>
+        <p>&copy; Papillon Digital. Tous droits réservés.</p>
+    </footer>
 </body>
 </html>

@@ -21,7 +21,6 @@ $articles = getArticles($pdo);
             <ul>
                 <li><a href="accueil.php">Accueil</a></li>
                 <li><a href="admin.php">Admin</a></li>
-                <li><a href="inscription.php"> Inscription</a></li>
                 <li><a href="login.php">login</a></li>
             </ul>
         </nav>
