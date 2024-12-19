@@ -35,25 +35,70 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Connexion</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="public/css/styles.css">
 </head>
-<header>
+<body class="min-h-screen bg-gradient-to-br from-white-500 flex flex-col items-center justify-center p-4">
+  <header class="rounded-md shadow-md px-4 py-2 w-full max-w-md text-center mb-8 bg-pink-900">
         <nav>
-            <ul>
+            <ul class="flex flex-row text-white justify-center items-center space-x-4">
                 <li><a href="accueil.php">Accueil</a></li>
                 <li><a href="article.php">login</a></li>
             </ul>
         </nav>
     </header>
-<body>
-    <h1 class="container">Connexion à l'administration</h1>
-    <form class="signup__form" method="POST">
-        <input type="text" name="username" placeholder="Nom d'utilisateur" required><br>
-        <input type="password" name="password" placeholder="Mot de passe" required><br>
-        <input class="btn" type="submit" value="Connexion">
-    </form>
-    <footer>
-        <p>&copy; Papillon Digital. Tous droits réservés.</p>
-    </footer>
+<div class="w-full max-w-sm bg-white rounded-lg shadow-lg p-8 ">
+        <h1 class="text-2xl font-semibold text-gray-800 text-center mb-6">Connexion</h1>
+        
+        <form class="space-y-5" method="POST">
+            <div>
+                <label for="username" class="block mb-2 text-sm font-medium text-gray-700">Nom d'utilisation</label>
+                <input 
+                    type="text" 
+                    id="username" 
+                    name="username"
+                    placeholder="votre nom d'utilisation"
+                    class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                    required
+                />
+            </div>
+
+            <div>
+                <label for="password" class="block mb-2 text-sm font-medium text-gray-700">Mot de passe</label>
+                <input 
+                    type="password" 
+                    id="password" 
+                    name="password"
+                    placeholder="••••••••"
+                    class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                    required
+                />
+            </div>
+
+            <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                    <input 
+                        id="remember" 
+                        type="checkbox" 
+                        class="h-4 w-4 text-orange-400 focus:ring-orange-400 border-gray-300 rounded peer"
+                    />
+                    <label for="remember" class="ml-2 text-sm text-gray-700">Se souvenir de moi</label>
+                </div>
+                <a href="#" class="text-sm text-orange-400 hover:underline">Mot de passe oublié?</a>
+            </div>
+
+            <button 
+                type="submit"
+                class="w-full bg-pink-900 text-white font-semibold py-2 rounded-md hover:bg-pink-700 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2"
+            >
+                Se connecter
+            </button>
+        </form>
+       
+
+        <p class="mt-6 text-center text-sm text-gray-600">
+            Vous n'avez pas de compte ?
+            <a href="#" class="text-orange-400 hover:underline">Créer un compte</a>
+        </p>
+    </div>
 </body>
 </html>
