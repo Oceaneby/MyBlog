@@ -44,8 +44,8 @@ $commentaires = getComments($pdo, $id_article);
     <header class=" bg-gradient-to-br from-white-500 flex flex-col items-center justify-center p-4">
         <nav class="rounded-md shadow-md px-4 py-2 w-full max-w-md text-center mb-8 bg-pink-900">
             <ul class="flex flex-row text-white justify-center items-center space-x-4">
-                <li><a href="accueil.php">Accueil</a></li>
-                <li><a href="login.php">login</a></li>
+                <li><a href="accueil.php" aria-label="Accédez à la page d'accueil">Accueil</a></li>
+                <li><a href="login.php" aria-label="Accédez à la page Administrateur">login</a></li>
             </ul>
         </nav>
     </header>
@@ -54,28 +54,42 @@ $commentaires = getComments($pdo, $id_article);
         <h1 class=" mb-12 text-center text-3xl md:text-4xl font-bold leading-tight text-gray-700"><?= htmlspecialchars($article['title']) ?></h1>
         <!-- J'affiche la date de publication de l'article (quelque doute que se soit la bonne méthode ?)  -->
         <p class="text-sm text-gray-500 mb-4">Publié le <?= date('d/m/Y H:i', strtotime($article['created_at'])) ?></p>
-        <p class="text-lg leading-relaxed mb-4"><?= htmlspecialchars($article['content']) ?></p>
+        <p class="text-lg leading-relaxed text-gray-700 mb-8"><?= nl2br(htmlspecialchars($article['content'])) ?></p>
+        <section class="bg-white p-6 rounded-lg shadow-md mb-12">
+            <h2 class="text-2xl font-semibold text-gray-800 mb-4">Ajouter un commentaire</h2>
+            <?php if ($errorMessage): ?>
+                <p class="text-red-600 mb-4"><?= $errorMessage ?>
+                <?php endif ?>
+                <form method="POST" class="space-y-4">
+                    <textarea name="commentaire" class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent" aria-label="Écrivez votre commentaire" placeholder="Écrivez votre commentaire ici ..."></textarea><br>
+                    <input type="text" name="author" class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent" aria-label="Votre nom" placeholder="Votre nom ">
+                    <button type="submit" class="w-full py-3 mt-2 bg-pink-900 text-white font-semibold rounded-lg hover:bg-pink-700 transition duration-300" aria-label="Ajouter le commentaire">Ajouter le commentaire</button>
+                </form>
 
-        <h2>Ajouter un commentaire</h2>
-        <?php if ($errorMessage): ?>
-            <p style="color: red"><?= $errorMessage ?>
-            <?php endif ?>
-            <form method="POST">
-                <textarea name="commentaire"></textarea><br>
-                <input type="text" name="author" placeholder="Votre nom ">
-                <button type="submit">Ajouter le commentaire</button>
-            </form>
 
-            <h2>Commentaires</h2>
-            <!-- Je boucle sur les commentaires  -->
+
+        </section>
+        <h2 class="text-2xl font-semibold text-gray-800 mb-6">Commentaires</h2>
+        <!-- Je boucle sur les commentaires  -->
+        <?php if (empty($commentaires)): ?>
+            <p class=" text-xl text-gray-500 text-center font-semibold">Pas encore de commentaires</p>
+            <p class=" text-sm text-gray-500 text-center font-semibold">Soyez le premier à commenter !</p>
+        <?php else: ?>
+
             <?php foreach ($commentaires as $commentaire): ?>
-                <p>Le <?= date('d/m/Y H:i', strtotime($commentaire['created_at'])) ?> :</p>
-                <p><?= htmlspecialchars($commentaire['content']) ?></p>
-                <p><?= htmlspecialchars($commentaire['author']) ?></p>
+                <p class="text-sm text-gray-500 mb-2">Le <?= date('d/m/Y H:i', strtotime($commentaire['created_at'])) ?> par <?= htmlspecialchars($commentaire['author']) ?> </p>
+                <p class="text-gray-700"><?= htmlspecialchars($commentaire['content']) ?></p>
                 <!-- (Voir htmlspecialchars_decode ?)  -->
 
             <?php endforeach; ?>
+        <?php endif; ?>
     </main>
+    <section class=" bg-gradient-to-br from-white-500 flex flex-col items-center justify-center p-4">
+        <footer class="rounded-md shadow-md px-4 py-2 w-full max-w-md text-center mb-8 bg-pink-900">
+            <p class="flex flex-row text-white justify-center items-center space-x-4">&copy; Papillon Digital. Tous droits réservés.</p>
+        </footer>
+    </section>
 </body>
+
 
 </html>
